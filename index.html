@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AIXDATA 2026 — CSULB AI Club Datathon</title>
+  <meta name="description" content="AIXDATA 2026 is the CSULB AI Club's annual datathon. Compete with real-world datasets, April 18, 2026. Open to all CSULB students." />
+  <meta property="og:title"       content="AIXDATA 2026 — CSULB AI Club Datathon" />
+  <meta property="og:description" content="One day. Real data. April 18, 2026 at CSULB. Free to enter." />
+  <meta property="og:type"        content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&family=Black+Ops+One&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<!-- ══ LOADER ══════════════════════════════════════════════════════ -->
+<div id="loader">
+  <canvas id="loader-canvas"></canvas>
+  <div class="loader-inner">
+    <div class="loader-mascot">
+      <!-- Stingray outline — loader screen version -->
+      <svg class="mascot-svg" viewBox="-30 -20 420 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="lGlow">
+            <feGaussianBlur stdDeviation="2.5" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <!-- Disc body -->
+        <path d="M180,36 C216,32 325,78 340,130 C350,170 312,198 268,205
+                 C240,210 212,214 180,214 C148,214 120,210 92,205
+                 C48,198 10,170 20,130 C35,78 144,32 180,36 Z"
+          fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.7)" stroke-width="1.4"/>
+        <!-- Rostrum tip -->
+        <path d="M180,36 C176,26 172,19 170,13 C175,10 185,10 190,13 C188,19 184,26 180,36 Z"
+          fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
+        <!-- Eyes -->
+        <circle cx="156" cy="90" r="3.5" fill="white" filter="url(#lGlow)"/>
+        <circle cx="204" cy="90" r="3.5" fill="white" filter="url(#lGlow)"/>
+        <!-- Disc veins -->
+        <path d="M165,132 C138,138 104,132 66,122" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+        <path d="M195,132 C222,138 256,132 294,122" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+        <!-- Tail -->
+        <path d="M180,214 C177,238 172,264 164,288 C162,294 158,300 154,306"
+          stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/>
+        <!-- Electric bolts — white for loader -->
+        <polyline points="20,130 -8,108 3,122 -16,115"
+          stroke="rgba(255,255,255,0.75)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#lGlow)"/>
+        <polyline points="340,130 368,108 357,122 376,115"
+          stroke="rgba(255,255,255,0.75)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#lGlow)"/>
+        <polyline points="180,36 174,8 177,24 170,4"
+          stroke="rgba(255,255,255,0.75)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#lGlow)"/>
+      </svg>
+    </div>
+    <p class="loader-text">Loading...</p>
+    <div class="loader-bar-wrap">
+      <div class="loader-bar" id="loader-bar"></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══ BACKGROUND CANVAS ══════════════════════════════════════════ -->
+<canvas id="bg-canvas"></canvas>
+
+
+<!-- ══ ANNOUNCE BANNER ════════════════════════════════════════════ -->
+<!-- Scrolling ticker — like the BeachHacks top bar, but ours -->
+<div class="announce-banner" id="announce-banner">
+  <div class="announce-track">
+    <span class="a-item">⚡ APPLICATIONS NOW OPEN</span>
+    <span class="a-dot">·</span>
+    <span class="a-item">APRIL 18, 2026</span>
+    <span class="a-dot">·</span>
+    <span class="a-item">CSULB MAIN CAMPUS</span>
+    <span class="a-dot">·</span>
+    <span class="a-item">FREE TO ENTER</span>
+    <span class="a-dot">·</span>
+    <span class="a-item">PRIZES AWARDED</span>
+    <span class="a-dot">·</span>
+    <span class="a-item">TEAMS UP TO 4</span>
+    <span class="a-dot">·</span>
+    <span class="a-item">NO EXPERIENCE REQUIRED</span>
+    <span class="a-dot">·</span>
+    <span class="a-item">DATA SCIENCE · ML · COMPUTER VISION</span>
+    <span class="a-dot">·</span>
+    <!-- duplicate set for seamless loop -->
+    <span class="a-item">⚡ APPLICATIONS NOW OPEN</span>
+    <span class="a-dot">·</span>
+    <span class="a-item">APRIL 18, 2026</span>
+    <span class="a-dot">·</span>
+    <span class="a-item">CSULB MAIN CAMPUS</span>
+    <span class="a-dot">·</span>
+    <span class="a-item">FREE TO ENTER</span>
+    <span class="a-dot">·</span>
+    <span class="a-item">PRIZES AWARDED</span>
+    <span class="a-dot">·</span>
+    <span class="a-item">TEAMS UP TO 4</span>
+    <span class="a-dot">·</span>
+    <span class="a-item">NO EXPERIENCE REQUIRED</span>
+    <span class="a-dot">·</span>
+    <span class="a-item">DATA SCIENCE · ML · COMPUTER VISION</span>
+    <span class="a-dot">·</span>
+  </div>
+</div>
+
+
+<!-- ══ NAVBAR ═════════════════════════════════════════════════════ -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-brand">
+      <span class="brand-text">AIX<span class="brand-accent">D</span>ATA</span>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#schedule">Schedule</a></li>
+      <li><a href="#tracks">Tracks</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#speakers">Speakers</a></li>
+      <li><a href="#team">Team</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"/>
+          <line x1="12" y1="2"     x2="12" y2="5"/>
+          <line x1="12" y1="19"    x2="12" y2="22"/>
+          <line x1="4.22" y1="4.22"   x2="6.34"  y2="6.34"/>
+          <line x1="17.66" y1="17.66" x2="19.78" y2="19.78"/>
+          <line x1="2"  y1="12"    x2="5"  y2="12"/>
+          <line x1="19" y1="12"    x2="22" y2="12"/>
+          <line x1="4.22"  y1="19.78" x2="6.34"  y2="17.66"/>
+          <line x1="17.66" y1="6.34"  x2="19.78" y2="4.22"/>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ══ HERO ═══════════════════════════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <p class="hero-eyebrow">CSULB AI CLUB PRESENTS</p>
+      <h1 class="site-title">AIX<span class="title-accent">D</span>ATA</h1>
+      <p class="hero-sub">One day. Real data. No limits.</p>
+      <p class="hero-date">APRIL 18, 2026</p>
+
+      <!-- Flip countdown clock -->
+      <div class="flip-clock" id="flip-clock">
+        <div class="flip-unit">
+          <div class="flip-card" id="fc-days">
+            <div class="fc-face"><span id="days-top">00</span></div>
+          </div>
+          <span class="fc-label">Days</span>
+        </div>
+        <div class="fc-sep">:</div>
+        <div class="flip-unit">
+          <div class="flip-card" id="fc-hours">
+            <div class="fc-face"><span id="hours-top">00</span></div>
+          </div>
+          <span class="fc-label">Hours</span>
+        </div>
+        <div class="fc-sep">:</div>
+        <div class="flip-unit">
+          <div class="flip-card" id="fc-mins">
+            <div class="fc-face"><span id="mins-top">00</span></div>
+          </div>
+          <span class="fc-label">Minutes</span>
+        </div>
+        <div class="fc-sep">:</div>
+        <div class="flip-unit">
+          <div class="flip-card" id="fc-secs">
+            <div class="fc-face"><span id="secs-top">00</span></div>
+          </div>
+          <span class="fc-label">Seconds</span>
+        </div>
+      </div>
+
+      <div class="hero-ctas">
+        <a href="#signup" class="btn-primary">REGISTER NOW →</a>
+        <a href="#about"  class="btn-ghost">Learn More</a>
+      </div>
+    </div>
+
+    <!-- Stingray mascot — electric stingray is our icon -->
+    <div class="hero-right">
+      <div class="mascot-wrap" id="mascot">
+        <div class="orbital-ring"></div>
+
+        <svg class="mascot-main" viewBox="-30 -20 420 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <!-- Body gradient: deep ocean teal -->
+            <radialGradient id="discGrad" cx="50%" cy="36%" r="62%">
+              <stop offset="0%"   stop-color="#1e7090"/>
+              <stop offset="40%"  stop-color="#0e3d52"/>
+              <stop offset="100%" stop-color="#04111e"/>
+            </radialGradient>
+            <!-- Belly highlight — lighter center -->
+            <radialGradient id="bellyGrad" cx="50%" cy="42%" r="52%">
+              <stop offset="0%"   stop-color="#2eb8d8" stop-opacity="0.45"/>
+              <stop offset="100%" stop-color="#0e3d52" stop-opacity="0"/>
+            </radialGradient>
+            <!-- Fin edge gradient -->
+            <linearGradient id="finEdge" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%"   stop-color="#0a2c3e"/>
+              <stop offset="50%"  stop-color="#1a607a"/>
+              <stop offset="100%" stop-color="#0a2c3e"/>
+            </linearGradient>
+            <!-- Electric bolt glow -->
+            <filter id="eGlow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="4" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+            <!-- Body soft glow -->
+            <filter id="bGlow" x="-15%" y="-15%" width="130%" height="130%">
+              <feGaussianBlur stdDeviation="6" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+            <!-- Eye glow -->
+            <filter id="eyeG" x="-100%" y="-100%" width="300%" height="300%">
+              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+
+          <!-- ── Disc body — flat kite/rhombus shape, top-down view ── -->
+          <path d="M180,36 C216,32 325,78 340,130
+                   C350,170 312,198 268,205
+                   C240,210 212,214 180,214
+                   C148,214 120,210 92,205
+                   C48,198 10,170 20,130
+                   C35,78 144,32 180,36 Z"
+            fill="url(#discGrad)" stroke="#1a6b8a" stroke-width="1.5" filter="url(#bGlow)"/>
+
+          <!-- Belly sheen overlay -->
+          <path d="M180,36 C216,32 325,78 340,130
+                   C350,170 312,198 268,205
+                   C240,210 212,214 180,214
+                   C148,214 120,210 92,205
+                   C48,198 10,170 20,130
+                   C35,78 144,32 180,36 Z"
+            fill="url(#bellyGrad)"/>
+
+          <!-- Rostrum / snout — the slightly pointed front tip -->
+          <path d="M180,36 C176,26 172,19 170,13 C175,9 185,9 190,13 C188,19 184,26 180,36 Z"
+            fill="#0a2c3e" stroke="#1a6b8a" stroke-width="1.2"/>
+
+          <!-- Blue spots — signature of the blue-spotted stingray -->
+          <circle cx="118" cy="108" r="6.5" fill="none" stroke="#00c8e8" stroke-width="1.3" opacity="0.55"/>
+          <circle cx="118" cy="108" r="2.5" fill="#00c8e8" opacity="0.15"/>
+          <circle cx="148" cy="142" r="5"   fill="none" stroke="#00c8e8" stroke-width="1.2" opacity="0.5"/>
+          <circle cx="148" cy="142" r="2"   fill="#00c8e8" opacity="0.12"/>
+          <circle cx="198" cy="136" r="5.5" fill="none" stroke="#00c8e8" stroke-width="1.2" opacity="0.5"/>
+          <circle cx="198" cy="136" r="2.2" fill="#00c8e8" opacity="0.12"/>
+          <circle cx="224" cy="104" r="6"   fill="none" stroke="#00c8e8" stroke-width="1.3" opacity="0.55"/>
+          <circle cx="224" cy="104" r="2.4" fill="#00c8e8" opacity="0.15"/>
+          <circle cx="172" cy="164" r="4.5" fill="none" stroke="#00c8e8" stroke-width="1"   opacity="0.4"/>
+          <circle cx="108" cy="148" r="3.5" fill="none" stroke="#00c8e8" stroke-width="1"   opacity="0.38"/>
+          <circle cx="242" cy="150" r="3.5" fill="none" stroke="#00c8e8" stroke-width="1"   opacity="0.38"/>
+
+          <!-- Pectoral fin vein lines (top-down view detail) -->
+          <path d="M164,130 C136,137 102,130 64,120" stroke="rgba(0,200,232,0.2)" stroke-width="1.2"/>
+          <path d="M196,130 C224,137 258,130 296,120" stroke="rgba(0,200,232,0.2)" stroke-width="1.2"/>
+          <path d="M164,110 C140,116 110,108 76,100"  stroke="rgba(0,200,232,0.15)" stroke-width="1"/>
+          <path d="M196,110 C220,116 250,108 284,100"  stroke="rgba(0,200,232,0.15)" stroke-width="1"/>
+          <path d="M168,150 C148,155 122,150 90,142"  stroke="rgba(0,200,232,0.12)" stroke-width="1"/>
+          <path d="M192,150 C212,155 238,150 270,142"  stroke="rgba(0,200,232,0.12)" stroke-width="1"/>
+
+          <!-- Eyes — near the front of the disc, stingray-accurate placement -->
+          <ellipse cx="156" cy="88" rx="7" ry="6.5" fill="#050e18" stroke="#1a6b8a" stroke-width="1.2"/>
+          <circle  cx="156" cy="88" r="4" fill="#43BE28" filter="url(#eyeG)"/>
+          <circle  cx="156" cy="88" r="2" fill="#fff"/>
+          <circle  cx="153" cy="86" r="0.8" fill="rgba(255,255,255,0.4)"/>
+
+          <ellipse cx="204" cy="88" rx="7" ry="6.5" fill="#050e18" stroke="#1a6b8a" stroke-width="1.2"/>
+          <circle  cx="204" cy="88" r="4" fill="#43BE28" filter="url(#eyeG)"/>
+          <circle  cx="204" cy="88" r="2" fill="#fff"/>
+          <circle  cx="201" cy="86" r="0.8" fill="rgba(255,255,255,0.4)"/>
+
+          <!-- Spiracles (breathing openings behind the eyes) -->
+          <ellipse cx="156" cy="100" rx="3.5" ry="2.5" fill="#0a2c3e" stroke="#1a6b8a" stroke-width="0.8" opacity="0.6"/>
+          <ellipse cx="204" cy="100" rx="3.5" ry="2.5" fill="#0a2c3e" stroke="#1a6b8a" stroke-width="0.8" opacity="0.6"/>
+
+          <!-- Tail — long whip characteristic of stingrays -->
+          <path d="M180,214 C177,238 172,265 164,288 C162,295 158,302 154,308"
+            stroke="#1a6b8a" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+          <!-- Stinging barb on tail -->
+          <path d="M165,268 C158,258 146,262 142,273"
+            stroke="#2ab8d4" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+          <!-- Subtle tail mid-stripe -->
+          <path d="M179,220 C177,242 173,268 165,290"
+            stroke="rgba(42,184,212,0.25)" stroke-width="1" stroke-linecap="round"/>
+
+          <!-- ── Electric lightning bolts radiating from the body ── -->
+          <!-- Left wingtip — main bolt -->
+          <polyline class="bolt bolt-a" points="20,130 -8,108 4,124 -16,116"
+            stroke="#00E5FF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"
+            fill="none" filter="url(#eGlow)"/>
+          <!-- Left wingtip — secondary branch -->
+          <polyline class="bolt bolt-b" points="26,155 -2,170 12,162 -8,178"
+            stroke="#00E5FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"
+            fill="none" filter="url(#eGlow)" opacity="0.7"/>
+          <!-- Right wingtip — main bolt -->
+          <polyline class="bolt bolt-a" points="340,130 368,108 356,124 376,116"
+            stroke="#00E5FF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"
+            fill="none" filter="url(#eGlow)"/>
+          <!-- Right wingtip — secondary branch -->
+          <polyline class="bolt bolt-b" points="334,155 362,170 348,162 368,178"
+            stroke="#00E5FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"
+            fill="none" filter="url(#eGlow)" opacity="0.7"/>
+          <!-- Rostrum / top bolt — gold to match brand accent -->
+          <polyline class="bolt bolt-c" points="180,36 174,6 177,22 170,2"
+            stroke="#FFB520" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"
+            fill="none" filter="url(#eGlow)"/>
+          <!-- Tail barb bolt -->
+          <polyline class="bolt bolt-b" points="158,275 146,290 153,282 140,295"
+            stroke="#00E5FF" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"
+            fill="none" filter="url(#eGlow)" opacity="0.6"/>
+
+          <!-- Electric contact sparks at wingtips -->
+          <circle class="spark spark-a" cx="20"  cy="130" r="5.5" fill="none" stroke="#00E5FF" stroke-width="1.6" filter="url(#eGlow)"/>
+          <circle class="spark spark-b" cx="340" cy="130" r="5.5" fill="none" stroke="#00E5FF" stroke-width="1.6" filter="url(#eGlow)"/>
+          <circle class="spark spark-c" cx="180" cy="36"  r="4.5" fill="none" stroke="#FFB520" stroke-width="1.6" filter="url(#eGlow)"/>
+        </svg>
+
+        <div class="mascot-glow"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ STATS STRIP ════════════════════════════════════════════════ -->
+<div class="stats-strip">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <span class="stat-num" data-target="1">0</span>
+      <span class="stat-label">Day Event</span>
+    </div>
+    <div class="stat-div"></div>
+    <div class="stat-item">
+      <span class="stat-num" data-target="8">0</span>
+      <span class="stat-label">Hours of Hacking</span>
+    </div>
+    <div class="stat-div"></div>
+    <div class="stat-item">
+      <span class="stat-num" data-target="3">0</span>
+      <span class="stat-label">Tracks</span>
+    </div>
+    <div class="stat-div"></div>
+    <div class="stat-item">
+      <span class="stat-num" data-target="4">0</span>
+      <span class="stat-label">Max Team Size</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══ ABOUT / REGISTER ═══════════════════════════════════════════ -->
+<section id="about">
+  <div class="section-inner">
+
+    <div class="live-banner">
+      <span>Applications are </span><span class="live-pulse">LIVE</span>
+    </div>
+    <a href="#signup" class="btn-primary centered-btn">SIGN UP NOW</a>
+
+    <div class="about-grid">
+      <div class="about-card">
+        <h2 class="section-heading">ABOUT</h2>
+        <p>AIXDATA is the CSULB AI Club's annual datathon — a one-day competition where teams extract insights from real-world datasets and present their findings to a panel of judges. Open to all CSULB students with no experience required.</p>
+        <p style="margin-top:1rem;">Whether you're running your first regression or fine-tuning a neural net, there's a track for you. Workshops, mentors, free food, and prizes all day.</p>
+      </div>
+      <div class="about-highlights">
+        <div class="highlight-item">
+          <span class="hl-icon">📍</span>
+          <div>
+            <strong>Where</strong>
+            <p>CSULB Main Campus, Long Beach, CA<br><em>Exact venue TBA</em></p>
+          </div>
+        </div>
+        <div class="highlight-item">
+          <span class="hl-icon">📅</span>
+          <div>
+            <strong>When</strong>
+            <p>April 18, 2026 · 8 AM – 8 PM</p>
+          </div>
+        </div>
+        <div class="highlight-item">
+          <span class="hl-icon">🎓</span>
+          <div>
+            <strong>Who</strong>
+            <p>All currently enrolled CSULB students — any major, any year</p>
+          </div>
+        </div>
+        <div class="highlight-item">
+          <span class="hl-icon">💰</span>
+          <div>
+            <strong>Cost</strong>
+            <p>100% free. Meals included.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Registration form -->
+    <div id="signup" style="margin-top:4rem;">
+      <h2 class="section-heading centered">REGISTER</h2>
+      <p class="section-sub centered">Spots are limited. Lock in your place now.</p>
+      <form class="signup-form" id="signup-form" novalidate>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="fname">First Name</label>
+            <input type="text" id="fname" name="fname" placeholder="Jane" required />
+          </div>
+          <div class="form-field">
+            <label for="lname">Last Name</label>
+            <input type="text" id="lname" name="lname" placeholder="Doe" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="email">CSULB Email</label>
+            <input type="email" id="email" name="email" placeholder="jane.doe@student.csulb.edu" required />
+          </div>
+          <div class="form-field">
+            <label for="major">Major</label>
+            <input type="text" id="major" name="major" placeholder="Computer Science" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="exp">Experience Level</label>
+            <select id="exp" name="exp">
+              <option value="">Select...</option>
+              <option>Beginner</option>
+              <option>Intermediate</option>
+              <option>Advanced</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="team">Team Name <span class="label-opt">(optional)</span></label>
+            <input type="text" id="team" name="team" placeholder="Leave blank to be matched" />
+          </div>
+        </div>
+        <button type="submit" class="btn-primary form-submit">SUBMIT →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ SCHEDULE ═══════════════════════════════════════════════════ -->
+<section id="schedule">
+  <div class="section-inner">
+    <h2 class="section-heading centered">Schedule</h2>
+    <p class="section-sub centered">April 18, 2026 — times are approximate and subject to change.</p>
+
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="tl-time">8:00 AM</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Check-In &amp; Breakfast</h4>
+          <p>Doors open, food served. Find your spot and meet the other teams.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="tl-time">9:00 AM</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Opening Ceremony</h4>
+          <p>Welcome from the AI Club, sponsor shoutouts, and event rules briefing.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item highlight">
+        <div class="tl-time">9:30 AM</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>⚡ Hacking Begins</h4>
+          <p>Datasets drop. Clock starts. May the best model win.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="tl-time">11:00 AM</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Workshop — Exploratory Data Analysis</h4>
+          <p>Pandas, visualization, and feature discovery with mentors from industry.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="tl-time">1:00 PM</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Lunch Break</h4>
+          <p>Food provided. Step away, recharge, and rethink your approach.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="tl-time">2:30 PM</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Workshop — Model Selection &amp; Tuning</h4>
+          <p>Cross-validation, hyperparameter search, and evaluation strategies.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="tl-time">4:30 PM</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Workshop — Storytelling with Data</h4>
+          <p>How to turn your notebook into a compelling 3-minute pitch.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item highlight">
+        <div class="tl-time">5:30 PM</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>⏱ Hacking Ends — Submissions Due</h4>
+          <p>All notebooks and write-ups locked. No late entries.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="tl-time">6:00 PM</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Team Presentations</h4>
+          <p>3-minute pitches to the judge panel. Defend your methodology.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item highlight">
+        <div class="tl-time">7:30 PM</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>🏆 Awards &amp; Closing</h4>
+          <p>Winners announced, prizes distributed, and wrap-up from the AI Club.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ TRACKS ═════════════════════════════════════════════════════ -->
+<section id="tracks">
+  <div class="section-inner">
+    <h2 class="section-heading centered">Tracks</h2>
+    <p class="section-sub centered">Three distinct competition tracks. Pick your focus — or go broad.</p>
+    <p class="track-hint">Click any card to flip it.</p>
+
+    <div class="tracks-grid">
+
+      <div class="track-wrap">
+        <div class="track-card" onclick="this.classList.toggle('flipped')" tabindex="0"
+          onkeydown="if(event.key==='Enter')this.classList.toggle('flipped')">
+          <div class="track-inner">
+            <div class="track-front track-supervised">
+              <div class="track-glow"></div>
+              <span>SUPERVISED</span>
+            </div>
+            <div class="track-back">
+              <h3>Supervised Learning</h3>
+              <p>Work with labeled datasets to build classification and regression models. Predict outcomes, score accuracy, and optimize performance.</p>
+              <ul>
+                <li>Classification &amp; regression</li>
+                <li>Feature engineering</li>
+                <li>Model evaluation</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="track-wrap">
+        <div class="track-card" onclick="this.classList.toggle('flipped')" tabindex="0"
+          onkeydown="if(event.key==='Enter')this.classList.toggle('flipped')">
+          <div class="track-inner">
+            <div class="track-front track-unsupervised">
+              <div class="track-glow"></div>
+              <span>UNSUPERVISED</span>
+            </div>
+            <div class="track-back">
+              <h3>Unsupervised Learning</h3>
+              <p>Discover hidden patterns in unlabeled data. Cluster, compress, and explore without predefined answers.</p>
+              <ul>
+                <li>Clustering (K-Means, DBSCAN)</li>
+                <li>Dimensionality reduction</li>
+                <li>Anomaly detection</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="track-wrap">
+        <div class="track-card" onclick="this.classList.toggle('flipped')" tabindex="0"
+          onkeydown="if(event.key==='Enter')this.classList.toggle('flipped')">
+          <div class="track-inner">
+            <div class="track-front track-cv">
+              <div class="track-glow"></div>
+              <span>COMPUTER<br>VISION</span>
+            </div>
+            <div class="track-back">
+              <h3>Computer Vision</h3>
+              <p>Build models that see. Classify images, detect objects, and extract meaning from visual data.</p>
+              <ul>
+                <li>Image classification</li>
+                <li>Object detection</li>
+                <li>CNNs &amp; transfer learning</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ FAQ ════════════════════════════════════════════════════════ -->
+<section id="faq">
+  <div class="section-inner">
+    <h2 class="section-heading centered">FAQ</h2>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          What exactly is a datathon?
+          <span class="faq-arrow">▼</span>
+        </button>
+        <div class="faq-body">
+          <p>A datathon is a data science competition where teams analyze a real dataset and present insights within a fixed time window. Unlike hackathons focused on building apps, datathons emphasize analysis, modeling, and data storytelling.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          Where will AIXDATA be held?
+          <span class="faq-arrow">▼</span>
+        </button>
+        <div class="faq-body">
+          <p>On the CSULB campus in Long Beach, CA. The exact building and room will be announced closer to the event date via our socials and this site.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          Who can participate?
+          <span class="faq-arrow">▼</span>
+        </button>
+        <div class="faq-body">
+          <p>All currently enrolled CSULB students — any major, any year, any experience level. Beginner workshops and mentors are available throughout the day so you don't need a background in ML to compete.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          How big can a team be?
+          <span class="faq-arrow">▼</span>
+        </button>
+        <div class="faq-body">
+          <p>Up to 4 members. Solo participants are welcome too — just check the "match me with a team" option when registering and we'll connect you with others.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          Is there a registration fee?
+          <span class="faq-arrow">▼</span>
+        </button>
+        <div class="faq-body">
+          <p>No. AIXDATA is completely free to attend. Meals and snacks throughout the day are included, thanks to our sponsors.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          What should I bring?
+          <span class="faq-arrow">▼</span>
+        </button>
+        <div class="faq-body">
+          <p>Your laptop, charger, a valid CSULB student ID, and your best ideas. We'll handle the rest.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" aria-expanded="false">
+          When are the datasets released?
+          <span class="faq-arrow">▼</span>
+        </button>
+        <div class="faq-body">
+          <p>Datasets are revealed at the opening ceremony — everyone starts at the same time. No early access, no exceptions. Keeps it fair and keeps it exciting.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ SPEAKERS ═══════════════════════════════════════════════════ -->
+<section id="speakers">
+  <div class="section-inner">
+    <h2 class="section-heading centered">Speakers</h2>
+    <p class="section-sub centered">Industry professionals and researchers sharing insights. Announcements coming soon.</p>
+    <div class="speakers-grid">
+      <div class="speaker-card">
+        <div class="speaker-avatar"><div class="avatar-placeholder"></div></div>
+        <h3 class="speaker-name">TBA</h3>
+        <p class="speaker-org">Coming Soon</p>
+      </div>
+      <div class="speaker-card">
+        <div class="speaker-avatar"><div class="avatar-placeholder"></div></div>
+        <h3 class="speaker-name">TBA</h3>
+        <p class="speaker-org">Coming Soon</p>
+      </div>
+      <div class="speaker-card">
+        <div class="speaker-avatar"><div class="avatar-placeholder"></div></div>
+        <h3 class="speaker-name">TBA</h3>
+        <p class="speaker-org">Coming Soon</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ SPONSORS ═══════════════════════════════════════════════════ -->
+<section id="sponsors">
+  <div class="section-inner">
+    <h2 class="section-heading centered">Sponsors</h2>
+    <p class="section-sub centered">Supported by organizations investing in the next generation of data scientists.</p>
+    <div class="sponsors-grid">
+      <div class="sponsor-slot large"><span>Your Logo Here</span></div>
+      <div class="sponsor-slot medium"><span>Your Logo</span></div>
+      <div class="sponsor-slot medium"><span>Your Logo</span></div>
+      <div class="sponsor-slot small"><span>Logo</span></div>
+      <div class="sponsor-slot small"><span>Logo</span></div>
+      <div class="sponsor-slot small"><span>Logo</span></div>
+    </div>
+    <div style="text-align:center; margin-top:2.5rem;">
+      <a href="mailto:sponsorship@csulbai.org" class="btn-outline">Become a Sponsor →</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ THE TEAM ════════════════════════════════════════════════════ -->
+<section id="team">
+  <div class="section-inner">
+    <h2 class="section-heading centered">The Team</h2>
+    <div class="team-grid">
+      <div class="team-member">
+        <div class="member-ring"><div class="member-img"></div></div>
+        <span class="member-role">President</span>
+      </div>
+      <div class="team-member">
+        <div class="member-ring"><div class="member-img"></div></div>
+        <span class="member-role">Vice President</span>
+      </div>
+      <div class="team-member">
+        <div class="member-ring"><div class="member-img"></div></div>
+        <span class="member-role">Event Executive</span>
+      </div>
+      <div class="team-member">
+        <div class="member-ring"><div class="member-img"></div></div>
+        <span class="member-role">Treasurer</span>
+      </div>
+      <div class="team-member">
+        <div class="member-ring"><div class="member-img"></div></div>
+        <span class="member-role">Secretary</span>
+      </div>
+      <div class="team-member">
+        <div class="member-ring"><div class="member-img"></div></div>
+        <span class="member-role">Networking Director</span>
+      </div>
+      <div class="team-member">
+        <div class="member-ring"><div class="member-img"></div></div>
+        <span class="member-role">Project Executive</span>
+      </div>
+      <div class="team-member">
+        <div class="member-ring"><div class="member-img"></div></div>
+        <span class="member-role">Design Director</span>
+      </div>
+      <div class="team-member">
+        <div class="member-ring"><div class="member-img"></div></div>
+        <span class="member-role">Marketing Director</span>
+      </div>
+      <div class="team-member">
+        <div class="member-ring"><div class="member-img"></div></div>
+        <span class="member-role">Tech Lead</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ FOOTER ═════════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="brand-text">AIX<span class="brand-accent">D</span>ATA</span>
+      <p>CSULB AI Club · Long Beach, CA</p>
+    </div>
+    <div class="footer-links">
+      <a href="https://csulbai.org" target="_blank" rel="noopener">csulbai.org</a>
+      <a href="mailto:datathon@csulbai.org">Contact</a>
+      <a href="#about">About</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="footer-socials">
+      <a href="https://instagram.com/csulbai" target="_blank" rel="noopener" title="Instagram" class="social-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="2" y="2" width="20" height="20" rx="5"/>
+          <circle cx="12" cy="12" r="4.5"/>
+          <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+        </svg>
+      </a>
+      <a href="#" target="_blank" rel="noopener" title="Discord" class="social-link">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M20.317 4.37a19.8 19.8 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+        </svg>
+      </a>
+      <a href="https://linkedin.com/company/csulbai" target="_blank" rel="noopener" title="LinkedIn" class="social-link">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/>
+          <rect x="2" y="9" width="4" height="12"/>
+          <circle cx="4" cy="4" r="2"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+  <div class="footer-copy">© 2026 CSULB AI Club · AIXDATA</div>
+  <div class="credit-bar">
+    <span>Designed &amp; built by</span>
+    <span class="credit-name">David</span>
+    <span>· CSULB AI Club</span>
+  </div>
+</footer>
+
+<!-- scroll to top -->
+<button class="scroll-top" id="scroll-top" aria-label="Scroll to top">↑</button>
+
+<script src="js/main.js"></script>
+</body>
+</html>

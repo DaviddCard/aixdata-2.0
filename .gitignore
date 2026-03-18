@@ -1,0 +1,9 @@
+# Claude Code internals — not part of the project
+.claude/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/

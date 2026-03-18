@@ -1077,14 +1077,38 @@ section { position: relative; z-index: 1; }
 }
 
 .track-front {
-  background: linear-gradient(180deg, #52dd30 0%, #30920c 42%, #1c5c08 100%);
   border: 2px solid rgba(255,255,255,0.12);
+  overflow: hidden;
+}
+
+/* Supervised — green (primary brand) */
+.track-supervised {
+  background: linear-gradient(180deg, #52dd30 0%, #30920c 42%, #1c5c08 100%);
   box-shadow:
     0 5px 0 #103504,
     0 8px 22px rgba(0,0,0,0.5),
     inset 0 1px 0 rgba(255,255,255,0.18),
     0 0 28px rgba(67,190,40,0.22);
-  overflow: hidden;
+}
+
+/* Unsupervised — gold (secondary brand) */
+.track-unsupervised {
+  background: linear-gradient(180deg, #ffd040 0%, #d48a00 42%, #8c5800 100%);
+  box-shadow:
+    0 5px 0 #5c3800,
+    0 8px 22px rgba(0,0,0,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.18),
+    0 0 28px rgba(255,181,32,0.22);
+}
+
+/* Computer Vision — navy/electric blue (tertiary) */
+.track-cv {
+  background: linear-gradient(180deg, #3a8fd4 0%, #1d5a99 42%, #0d3060 100%);
+  box-shadow:
+    0 5px 0 #071c40,
+    0 8px 22px rgba(0,0,0,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.18),
+    0 0 28px rgba(23,60,99,0.4);
 }
 
 .track-glow {
@@ -1517,6 +1541,71 @@ footer {
 
 .fade-in.visible { opacity: 1; transform: none; }
 
+
+/* ── Highlight items — light mode ───────────────────────────────── */
+[data-theme="light"] .highlight-item {
+  background: rgba(255,255,255,0.82);
+  border-color: rgba(67,190,40,0.22);
+}
+
+[data-theme="light"] .about-card {
+  background: rgba(255,255,255,0.82);
+  border-color: rgba(23,60,99,0.12);
+  color: rgba(18,40,18,0.72);
+}
+
+[data-theme="light"] .stats-strip {
+  background: rgba(23,60,99,0.06);
+  border-color: rgba(67,190,40,0.2);
+}
+
+[data-theme="light"] .track-back {
+  background: rgba(240,248,242,0.95);
+  border-color: rgba(67,190,40,0.25);
+}
+
+[data-theme="light"] .speaker-card {
+  background: rgba(255,255,255,0.8);
+  border-color: rgba(23,60,99,0.12);
+}
+
+[data-theme="light"] .sponsor-slot {
+  background: rgba(23,60,99,0.04);
+  color: rgba(18,40,18,0.38);
+}
+
+[data-theme="light"] .faq-item {
+  background: rgba(238,248,240,0.85);
+  border-color: rgba(67,190,40,0.22);
+}
+
+[data-theme="light"] .faq-btn {
+  color: var(--text);
+  background: rgba(67,190,40,0.05);
+}
+
+[data-theme="light"] .tl-content h4 { color: var(--text); }
+[data-theme="light"] .tl-content p  { color: var(--text-dim); }
+[data-theme="light"] .speaker-name  { color: var(--text); }
+
+[data-theme="light"] .signup-form {
+  background: rgba(255,255,255,0.8);
+}
+
+/* ── Smooth section separator lines ─────────────────────────────── */
+#about::before,
+#tracks::before,
+#faq::before,
+#speakers::before,
+#team::before {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--green), transparent);
+  margin: 0 auto;
+  opacity: 0.4;
+}
 
 /* ── Responsive ──────────────────────────────────────────────────── */
 @media (max-width: 960px) {

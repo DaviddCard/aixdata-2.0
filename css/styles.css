@@ -635,6 +635,19 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   filter: drop-shadow(0 0 24px rgba(0,200,240,0.5));
 }
 
+/* PNG mascot — shown when assets/stingray.png exists */
+.mascot-img {
+  display: block;
+  object-fit: contain;
+}
+
+/* SVG fallback — hidden once the real PNG loads */
+.mascot-img ~ .mascot-svg-fallback { display: none; }
+
+/* If the PNG fails to load the browser hides .mascot-img via onerror;
+   JS in main.js falls back to showing the SVG instead */
+.mascot-img.hidden + .mascot-svg-fallback { display: block; }
+
 .mascot-glow {
   position: absolute;
   width: 200px;

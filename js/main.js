@@ -424,6 +424,16 @@ if (scrollTopBtn) {
 }
 
 
+// ── Mascot image fallback ─────────────────────────────────────────
+// If assets/stingray.png doesn't exist yet, reveal the SVG fallback
+const mascotImg = document.querySelector('.mascot-img');
+if (mascotImg) {
+  mascotImg.addEventListener('error', () => {
+    mascotImg.classList.add('hidden');
+  });
+}
+
+
 // ── Registration form (stub) ──────────────────────────────────────
 const form = document.getElementById('signup-form');
 if (form) {

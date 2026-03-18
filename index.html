@@ -20,38 +20,38 @@
   <canvas id="loader-canvas"></canvas>
   <div class="loader-inner">
     <div class="loader-mascot">
-      <!-- Stingray outline — loader screen version -->
-      <svg class="mascot-svg" viewBox="-30 -20 420 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Stingray outline — loader screen version, matches hero proportions -->
+      <svg class="mascot-svg" viewBox="-80 -50 640 490" fill="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <filter id="lGlow">
-            <feGaussianBlur stdDeviation="2.5" result="b"/>
+            <feGaussianBlur stdDeviation="3" result="b"/>
             <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
           </filter>
         </defs>
-        <!-- Disc body -->
-        <path d="M180,36 C216,32 325,78 340,130 C350,170 312,198 268,205
-                 C240,210 212,214 180,214 C148,214 120,210 92,205
-                 C48,198 10,170 20,130 C35,78 144,32 180,36 Z"
-          fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.7)" stroke-width="1.4"/>
-        <!-- Rostrum tip -->
-        <path d="M180,36 C176,26 172,19 170,13 C175,10 185,10 190,13 C188,19 184,26 180,36 Z"
-          fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
+        <!-- Disc body — same path as the hero mascot -->
+        <path d="M240,38 C320,22 448,72 448,152 C452,200 418,250 342,264
+                 C306,272 274,276 240,276 C206,276 174,272 138,264
+                 C62,250 28,200 32,152 C32,72 160,22 240,38 Z"
+          fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.65)" stroke-width="1.4"/>
+        <!-- Rostrum -->
+        <path d="M240,38 C236,28 232,20 230,14 C234,10 246,10 250,14 C248,20 244,28 240,38 Z"
+          fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.45)" stroke-width="1"/>
         <!-- Eyes -->
-        <circle cx="156" cy="90" r="3.5" fill="white" filter="url(#lGlow)"/>
-        <circle cx="204" cy="90" r="3.5" fill="white" filter="url(#lGlow)"/>
-        <!-- Disc veins -->
-        <path d="M165,132 C138,138 104,132 66,122" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
-        <path d="M195,132 C222,138 256,132 294,122" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+        <circle cx="206" cy="96" r="4" fill="white" filter="url(#lGlow)"/>
+        <circle cx="274" cy="96" r="4" fill="white" filter="url(#lGlow)"/>
+        <!-- Fin veins -->
+        <path d="M216,148 C182,157 140,148 92,136"  stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+        <path d="M264,148 C298,157 340,148 388,136"  stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
         <!-- Tail -->
-        <path d="M180,214 C177,238 172,264 164,288 C162,294 158,300 154,306"
-          stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/>
-        <!-- Electric bolts — white for loader -->
-        <polyline points="20,130 -8,108 3,122 -16,115"
-          stroke="rgba(255,255,255,0.75)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#lGlow)"/>
-        <polyline points="340,130 368,108 357,122 376,115"
-          stroke="rgba(255,255,255,0.75)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#lGlow)"/>
-        <polyline points="180,36 174,8 177,24 170,4"
-          stroke="rgba(255,255,255,0.75)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#lGlow)"/>
+        <path d="M240,276 C236,310 228,348 218,378 C213,394 206,406 200,416"
+          stroke="rgba(255,255,255,0.58)" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- Electric bolts — white outlines for loader -->
+        <polyline points="32,152 0,124 16,142 -20,130 -52,118"
+          stroke="rgba(255,255,255,0.72)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#lGlow)"/>
+        <polyline points="448,152 480,124 464,142 500,130 532,118"
+          stroke="rgba(255,255,255,0.72)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#lGlow)"/>
+        <polyline points="240,38 234,-8 238,14 228,-18"
+          stroke="rgba(255,255,255,0.72)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#lGlow)"/>
       </svg>
     </div>
     <p class="loader-text">Loading...</p>
@@ -195,47 +195,41 @@
     <!-- Stingray mascot — electric stingray is our icon -->
     <div class="hero-right">
       <div class="mascot-wrap" id="mascot">
-        <div class="orbital-ring"></div>
-
-        <svg class="mascot-main" viewBox="-30 -20 420 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Stingray mascot — blue-spotted stingray, top-down view -->
+        <!-- viewBox gives enough room for the electric bolts that extend beyond the body -->
+        <svg class="mascot-main" viewBox="-80 -50 640 490" fill="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <!-- Body gradient: deep ocean teal -->
+            <!-- Body gradient: visible teal, clear flat disc look -->
             <radialGradient id="discGrad" cx="50%" cy="36%" r="62%">
-              <stop offset="0%"   stop-color="#1e7090"/>
-              <stop offset="40%"  stop-color="#0e3d52"/>
-              <stop offset="100%" stop-color="#04111e"/>
+              <stop offset="0%"   stop-color="#2aa8c8"/>
+              <stop offset="40%"  stop-color="#0e5472"/>
+              <stop offset="100%" stop-color="#061828"/>
             </radialGradient>
-            <!-- Belly highlight — lighter center -->
-            <radialGradient id="bellyGrad" cx="50%" cy="42%" r="52%">
-              <stop offset="0%"   stop-color="#2eb8d8" stop-opacity="0.45"/>
-              <stop offset="100%" stop-color="#0e3d52" stop-opacity="0"/>
+            <!-- Dorsal sheen: prominent belly highlight, not 3D shadow -->
+            <radialGradient id="sheenGrad" cx="50%" cy="30%" r="46%">
+              <stop offset="0%"   stop-color="#7af0ff" stop-opacity="0.32"/>
+              <stop offset="100%" stop-color="#7af0ff" stop-opacity="0"/>
             </radialGradient>
-            <!-- Fin edge gradient -->
-            <linearGradient id="finEdge" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%"   stop-color="#0a2c3e"/>
-              <stop offset="50%"  stop-color="#1a607a"/>
-              <stop offset="100%" stop-color="#0a2c3e"/>
-            </linearGradient>
-            <!-- Electric bolt glow -->
-            <filter id="eGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <!-- Electric bolt / spark glow -->
+            <filter id="eGlow" x="-60%" y="-60%" width="220%" height="220%">
+              <feGaussianBlur stdDeviation="5.5" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+            <!-- Subtle body edge glow — no heavy shadow -->
+            <filter id="bGlow" x="-12%" y="-12%" width="124%" height="124%">
               <feGaussianBlur stdDeviation="4" result="blur"/>
               <feMerge>
                 <feMergeNode in="blur"/>
-                <feMergeNode in="blur"/>
                 <feMergeNode in="SourceGraphic"/>
               </feMerge>
             </filter>
-            <!-- Body soft glow -->
-            <filter id="bGlow" x="-15%" y="-15%" width="130%" height="130%">
-              <feGaussianBlur stdDeviation="6" result="blur"/>
-              <feMerge>
-                <feMergeNode in="blur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </filter>
-            <!-- Eye glow -->
-            <filter id="eyeG" x="-100%" y="-100%" width="300%" height="300%">
-              <feGaussianBlur stdDeviation="3" result="blur"/>
+            <!-- Green eye glow -->
+            <filter id="eyeG" x="-120%" y="-120%" width="340%" height="340%">
+              <feGaussianBlur stdDeviation="3.5" result="blur"/>
               <feMerge>
                 <feMergeNode in="blur"/>
                 <feMergeNode in="SourceGraphic"/>
@@ -243,104 +237,142 @@
             </filter>
           </defs>
 
-          <!-- ── Disc body — flat kite/rhombus shape, top-down view ── -->
-          <path d="M180,36 C216,32 325,78 340,130
-                   C350,170 312,198 268,205
-                   C240,210 212,214 180,214
-                   C148,214 120,210 92,205
-                   C48,198 10,170 20,130
-                   C35,78 144,32 180,36 Z"
-            fill="url(#discGrad)" stroke="#1a6b8a" stroke-width="1.5" filter="url(#bGlow)"/>
+          <!-- ── Disc body — wide oval with swept pectoral fins ── -->
+          <!-- Leading edges sweep back from the snout; trailing edges curve in to the tail base -->
+          <path d="M240,38
+                   C320,22 448,72 448,152
+                   C452,200 418,250 342,264
+                   C306,272 274,276 240,276
+                   C206,276 174,272 138,264
+                   C62,250 28,200 32,152
+                   C32,72 160,22 240,38 Z"
+            fill="url(#discGrad)" stroke="#1a7898" stroke-width="1.5" filter="url(#bGlow)"/>
 
-          <!-- Belly sheen overlay -->
-          <path d="M180,36 C216,32 325,78 340,130
-                   C350,170 312,198 268,205
-                   C240,210 212,214 180,214
-                   C148,214 120,210 92,205
-                   C48,198 10,170 20,130
-                   C35,78 144,32 180,36 Z"
-            fill="url(#bellyGrad)"/>
+          <!-- Dorsal highlight overlay -->
+          <path d="M240,38 C320,22 448,72 448,152 C452,200 418,250 342,264
+                   C306,272 274,276 240,276 C206,276 174,272 138,264
+                   C62,250 28,200 32,152 C32,72 160,22 240,38 Z"
+            fill="url(#sheenGrad)"/>
 
-          <!-- Rostrum / snout — the slightly pointed front tip -->
-          <path d="M180,36 C176,26 172,19 170,13 C175,9 185,9 190,13 C188,19 184,26 180,36 Z"
-            fill="#0a2c3e" stroke="#1a6b8a" stroke-width="1.2"/>
+          <!-- Rostrum — narrow pointed snout at front of disc -->
+          <path d="M240,38 C236,28 232,20 230,14 C234,10 246,10 250,14 C248,20 244,28 240,38 Z"
+            fill="#062030" stroke="#1a7898" stroke-width="1.1"/>
 
-          <!-- Blue spots — signature of the blue-spotted stingray -->
-          <circle cx="118" cy="108" r="6.5" fill="none" stroke="#00c8e8" stroke-width="1.3" opacity="0.55"/>
-          <circle cx="118" cy="108" r="2.5" fill="#00c8e8" opacity="0.15"/>
-          <circle cx="148" cy="142" r="5"   fill="none" stroke="#00c8e8" stroke-width="1.2" opacity="0.5"/>
-          <circle cx="148" cy="142" r="2"   fill="#00c8e8" opacity="0.12"/>
-          <circle cx="198" cy="136" r="5.5" fill="none" stroke="#00c8e8" stroke-width="1.2" opacity="0.5"/>
-          <circle cx="198" cy="136" r="2.2" fill="#00c8e8" opacity="0.12"/>
-          <circle cx="224" cy="104" r="6"   fill="none" stroke="#00c8e8" stroke-width="1.3" opacity="0.55"/>
-          <circle cx="224" cy="104" r="2.4" fill="#00c8e8" opacity="0.15"/>
-          <circle cx="172" cy="164" r="4.5" fill="none" stroke="#00c8e8" stroke-width="1"   opacity="0.4"/>
-          <circle cx="108" cy="148" r="3.5" fill="none" stroke="#00c8e8" stroke-width="1"   opacity="0.38"/>
-          <circle cx="242" cy="150" r="3.5" fill="none" stroke="#00c8e8" stroke-width="1"   opacity="0.38"/>
+          <!-- Leading-edge fin highlights — subtle light line along the forward sweep of each wing -->
+          <path d="M240,50 C308,36 438,84 445,154" stroke="rgba(80,210,240,0.14)" stroke-width="2" fill="none"/>
+          <path d="M240,50 C172,36 42,84 35,154"   stroke="rgba(80,210,240,0.14)" stroke-width="2" fill="none"/>
 
-          <!-- Pectoral fin vein lines (top-down view detail) -->
-          <path d="M164,130 C136,137 102,130 64,120" stroke="rgba(0,200,232,0.2)" stroke-width="1.2"/>
-          <path d="M196,130 C224,137 258,130 296,120" stroke="rgba(0,200,232,0.2)" stroke-width="1.2"/>
-          <path d="M164,110 C140,116 110,108 76,100"  stroke="rgba(0,200,232,0.15)" stroke-width="1"/>
-          <path d="M196,110 C220,116 250,108 284,100"  stroke="rgba(0,200,232,0.15)" stroke-width="1"/>
-          <path d="M168,150 C148,155 122,150 90,142"  stroke="rgba(0,200,232,0.12)" stroke-width="1"/>
-          <path d="M192,150 C212,155 238,150 270,142"  stroke="rgba(0,200,232,0.12)" stroke-width="1"/>
+          <!-- Central body ridge / lateral line -->
+          <path d="M240,54 C239,110 238,175 238,235"
+            stroke="rgba(0,200,232,0.16)" stroke-width="1" stroke-dasharray="5 7" fill="none"/>
 
-          <!-- Eyes — near the front of the disc, stingray-accurate placement -->
-          <ellipse cx="156" cy="88" rx="7" ry="6.5" fill="#050e18" stroke="#1a6b8a" stroke-width="1.2"/>
-          <circle  cx="156" cy="88" r="4" fill="#43BE28" filter="url(#eyeG)"/>
-          <circle  cx="156" cy="88" r="2" fill="#fff"/>
-          <circle  cx="153" cy="86" r="0.8" fill="rgba(255,255,255,0.4)"/>
+          <!-- Pectoral fin veins (radiate outward from the body centerline) -->
+          <path d="M216,148 C182,157 140,148 92,136"  stroke="rgba(0,200,232,0.22)" stroke-width="1.2"/>
+          <path d="M264,148 C298,157 340,148 388,136"  stroke="rgba(0,200,232,0.22)" stroke-width="1.2"/>
+          <path d="M218,118 C188,126 152,118 110,108"  stroke="rgba(0,200,232,0.16)" stroke-width="1.1"/>
+          <path d="M262,118 C292,126 328,118 370,108"  stroke="rgba(0,200,232,0.16)" stroke-width="1.1"/>
+          <path d="M218,178 C190,186 156,178 114,170"  stroke="rgba(0,200,232,0.12)" stroke-width="1"/>
+          <path d="M262,178 C290,186 324,178 366,170"  stroke="rgba(0,200,232,0.12)" stroke-width="1"/>
 
-          <ellipse cx="204" cy="88" rx="7" ry="6.5" fill="#050e18" stroke="#1a6b8a" stroke-width="1.2"/>
-          <circle  cx="204" cy="88" r="4" fill="#43BE28" filter="url(#eyeG)"/>
-          <circle  cx="204" cy="88" r="2" fill="#fff"/>
-          <circle  cx="201" cy="86" r="0.8" fill="rgba(255,255,255,0.4)"/>
+          <!-- Blue spots — signature of the blue-spotted stingray (Taeniura lymma) -->
+          <!-- Outer wing spots — large, vivid -->
+          <circle cx="108" cy="124" r="9"    fill="#00d8f0" opacity="0.55"/>
+          <circle cx="108" cy="124" r="9"    fill="none"   stroke="#7af5ff" stroke-width="1.5" opacity="0.85"/>
+          <circle cx="372" cy="124" r="9"    fill="#00d8f0" opacity="0.55"/>
+          <circle cx="372" cy="124" r="9"    fill="none"   stroke="#7af5ff" stroke-width="1.5" opacity="0.85"/>
+          <!-- Mid-wing spots -->
+          <circle cx="146" cy="164" r="7"    fill="#00d8f0" opacity="0.48"/>
+          <circle cx="146" cy="164" r="7"    fill="none"   stroke="#7af5ff" stroke-width="1.4" opacity="0.8"/>
+          <circle cx="334" cy="162" r="7"    fill="#00d8f0" opacity="0.48"/>
+          <circle cx="334" cy="162" r="7"    fill="none"   stroke="#7af5ff" stroke-width="1.4" opacity="0.8"/>
+          <!-- Front-center spots -->
+          <circle cx="198" cy="84"  r="6.5"  fill="#00d8f0" opacity="0.45"/>
+          <circle cx="198" cy="84"  r="6.5"  fill="none"   stroke="#7af5ff" stroke-width="1.3" opacity="0.75"/>
+          <circle cx="282" cy="84"  r="6.5"  fill="#00d8f0" opacity="0.45"/>
+          <circle cx="282" cy="84"  r="6.5"  fill="none"   stroke="#7af5ff" stroke-width="1.3" opacity="0.75"/>
+          <!-- Center body spots -->
+          <circle cx="200" cy="154" r="6"    fill="#00d8f0" opacity="0.42"/>
+          <circle cx="200" cy="154" r="6"    fill="none"   stroke="#7af5ff" stroke-width="1.2" opacity="0.7"/>
+          <circle cx="280" cy="156" r="6"    fill="#00d8f0" opacity="0.42"/>
+          <circle cx="280" cy="156" r="6"    fill="none"   stroke="#7af5ff" stroke-width="1.2" opacity="0.7"/>
+          <!-- Trailing small spots -->
+          <circle cx="90"  cy="160" r="5"    fill="#00d8f0" opacity="0.38"/>
+          <circle cx="90"  cy="160" r="5"    fill="none"   stroke="#7af5ff" stroke-width="1"   opacity="0.65"/>
+          <circle cx="390" cy="158" r="5"    fill="#00d8f0" opacity="0.38"/>
+          <circle cx="390" cy="158" r="5"    fill="none"   stroke="#7af5ff" stroke-width="1"   opacity="0.65"/>
+          <circle cx="180" cy="206" r="4.5"  fill="#00d8f0" opacity="0.32"/>
+          <circle cx="180" cy="206" r="4.5"  fill="none"   stroke="#7af5ff" stroke-width="1"   opacity="0.58"/>
+          <circle cx="300" cy="204" r="4.5"  fill="#00d8f0" opacity="0.32"/>
+          <circle cx="300" cy="204" r="4.5"  fill="none"   stroke="#7af5ff" stroke-width="1"   opacity="0.58"/>
 
-          <!-- Spiracles (breathing openings behind the eyes) -->
-          <ellipse cx="156" cy="100" rx="3.5" ry="2.5" fill="#0a2c3e" stroke="#1a6b8a" stroke-width="0.8" opacity="0.6"/>
-          <ellipse cx="204" cy="100" rx="3.5" ry="2.5" fill="#0a2c3e" stroke="#1a6b8a" stroke-width="0.8" opacity="0.6"/>
+          <!-- Eyes — positioned near the front of the disc, green irises -->
+          <ellipse cx="206" cy="96" rx="9.5" ry="8.5" fill="#030c18" stroke="#1a7898" stroke-width="1.4"/>
+          <circle  cx="206" cy="96" r="5.8"  fill="#43BE28" filter="url(#eyeG)"/>
+          <circle  cx="206" cy="96" r="2.8"  fill="#fff"/>
+          <circle  cx="203" cy="94" r="1.1"  fill="rgba(255,255,255,0.45)"/>
 
-          <!-- Tail — long whip characteristic of stingrays -->
-          <path d="M180,214 C177,238 172,265 164,288 C162,295 158,302 154,308"
-            stroke="#1a6b8a" stroke-width="3.5" stroke-linecap="round" fill="none"/>
-          <!-- Stinging barb on tail -->
-          <path d="M165,268 C158,258 146,262 142,273"
-            stroke="#2ab8d4" stroke-width="2.2" stroke-linecap="round" fill="none"/>
-          <!-- Subtle tail mid-stripe -->
-          <path d="M179,220 C177,242 173,268 165,290"
-            stroke="rgba(42,184,212,0.25)" stroke-width="1" stroke-linecap="round"/>
+          <ellipse cx="274" cy="96" rx="9.5" ry="8.5" fill="#030c18" stroke="#1a7898" stroke-width="1.4"/>
+          <circle  cx="274" cy="96" r="5.8"  fill="#43BE28" filter="url(#eyeG)"/>
+          <circle  cx="274" cy="96" r="2.8"  fill="#fff"/>
+          <circle  cx="271" cy="94" r="1.1"  fill="rgba(255,255,255,0.45)"/>
 
-          <!-- ── Electric lightning bolts radiating from the body ── -->
+          <!-- Spiracles (openings just behind the eyes for breathing) -->
+          <ellipse cx="206" cy="113" rx="4.5" ry="3.2" fill="#051820" stroke="#1a7898" stroke-width="0.9" opacity="0.65"/>
+          <ellipse cx="274" cy="113" rx="4.5" ry="3.2" fill="#051820" stroke="#1a7898" stroke-width="0.9" opacity="0.65"/>
+
+          <!-- Subtle mouth marking visible from dorsal view -->
+          <path d="M228,216 C234,221 246,221 252,216"
+            stroke="rgba(0,200,232,0.2)" stroke-width="1.2" stroke-linecap="round"/>
+
+          <!-- ── Tail — long whip, characteristic of stingrays ── -->
+          <path d="M240,276 C236,310 228,348 218,378 C213,394 206,406 200,416"
+            stroke="#1a7898" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+          <!-- Tail dorsal stripe -->
+          <path d="M239,285 C234,320 226,358 216,384"
+            stroke="rgba(42,184,212,0.32)" stroke-width="1.4" stroke-linecap="round"/>
+          <!-- Barb / spine on tail -->
+          <path d="M222,356 C212,342 198,346 194,360"
+            stroke="#2ab8d4" stroke-width="2.6" stroke-linecap="round" fill="none"/>
+          <!-- Barb hook tip -->
+          <path d="M194,360 C190,366 195,373 202,370"
+            stroke="#2ab8d4" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+
+          <!-- ── Electric lightning bolts radiating from the wingtips ── -->
           <!-- Left wingtip — main bolt -->
-          <polyline class="bolt bolt-a" points="20,130 -8,108 4,124 -16,116"
-            stroke="#00E5FF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"
+          <polyline class="bolt bolt-a"
+            points="32,152 0,124 16,142 -20,130 -52,118"
+            stroke="#00E5FF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"
             fill="none" filter="url(#eGlow)"/>
           <!-- Left wingtip — secondary branch -->
-          <polyline class="bolt bolt-b" points="26,155 -2,170 12,162 -8,178"
-            stroke="#00E5FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"
-            fill="none" filter="url(#eGlow)" opacity="0.7"/>
+          <polyline class="bolt bolt-b"
+            points="38,178 4,198 22,188 -4,208"
+            stroke="#00E5FF" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"
+            fill="none" filter="url(#eGlow)" opacity="0.72"/>
           <!-- Right wingtip — main bolt -->
-          <polyline class="bolt bolt-a" points="340,130 368,108 356,124 376,116"
-            stroke="#00E5FF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"
+          <polyline class="bolt bolt-a"
+            points="448,152 480,124 464,142 500,130 532,118"
+            stroke="#00E5FF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"
             fill="none" filter="url(#eGlow)"/>
           <!-- Right wingtip — secondary branch -->
-          <polyline class="bolt bolt-b" points="334,155 362,170 348,162 368,178"
-            stroke="#00E5FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"
-            fill="none" filter="url(#eGlow)" opacity="0.7"/>
-          <!-- Rostrum / top bolt — gold to match brand accent -->
-          <polyline class="bolt bolt-c" points="180,36 174,6 177,22 170,2"
-            stroke="#FFB520" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"
+          <polyline class="bolt bolt-b"
+            points="442,178 476,198 458,188 484,208"
+            stroke="#00E5FF" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"
+            fill="none" filter="url(#eGlow)" opacity="0.72"/>
+          <!-- Rostrum bolt — gold, brand accent color -->
+          <polyline class="bolt bolt-c"
+            points="240,38 234,-8 238,14 228,-18"
+            stroke="#FFB520" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"
             fill="none" filter="url(#eGlow)"/>
-          <!-- Tail barb bolt -->
-          <polyline class="bolt bolt-b" points="158,275 146,290 153,282 140,295"
-            stroke="#00E5FF" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"
-            fill="none" filter="url(#eGlow)" opacity="0.6"/>
+          <!-- Tail barb discharge -->
+          <polyline class="bolt bolt-b"
+            points="198,364 183,382 191,372 174,388"
+            stroke="#00E5FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"
+            fill="none" filter="url(#eGlow)" opacity="0.62"/>
 
-          <!-- Electric contact sparks at wingtips -->
-          <circle class="spark spark-a" cx="20"  cy="130" r="5.5" fill="none" stroke="#00E5FF" stroke-width="1.6" filter="url(#eGlow)"/>
-          <circle class="spark spark-b" cx="340" cy="130" r="5.5" fill="none" stroke="#00E5FF" stroke-width="1.6" filter="url(#eGlow)"/>
-          <circle class="spark spark-c" cx="180" cy="36"  r="4.5" fill="none" stroke="#FFB520" stroke-width="1.6" filter="url(#eGlow)"/>
+          <!-- Electric contact sparks at the wingtips and snout -->
+          <circle class="spark spark-a" cx="32"  cy="152" r="7.5" fill="none" stroke="#00E5FF" stroke-width="2.2" filter="url(#eGlow)"/>
+          <circle class="spark spark-b" cx="448" cy="152" r="7.5" fill="none" stroke="#00E5FF" stroke-width="2.2" filter="url(#eGlow)"/>
+          <circle class="spark spark-c" cx="240" cy="38"  r="5.5" fill="none" stroke="#FFB520" stroke-width="2"   filter="url(#eGlow)"/>
         </svg>
 
         <div class="mascot-glow"></div>
@@ -393,28 +425,51 @@
       </div>
       <div class="about-highlights">
         <div class="highlight-item">
-          <span class="hl-icon">📍</span>
+          <span class="hl-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+          </span>
           <div>
             <strong>Where</strong>
-            <p>CSULB Main Campus, Long Beach, CA<br><em>Exact venue TBA</em></p>
+            <p>CSULB Main Campus, Long Beach, CA<br><em>Exact venue: to be determined</em></p>
           </div>
         </div>
         <div class="highlight-item">
-          <span class="hl-icon">📅</span>
+          <span class="hl-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8"  y1="2" x2="8"  y2="6"/>
+              <line x1="3"  y1="10" x2="21" y2="10"/>
+            </svg>
+          </span>
           <div>
             <strong>When</strong>
             <p>April 18, 2026 · 8 AM – 8 PM</p>
           </div>
         </div>
         <div class="highlight-item">
-          <span class="hl-icon">🎓</span>
+          <span class="hl-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </span>
           <div>
             <strong>Who</strong>
             <p>All currently enrolled CSULB students — any major, any year</p>
           </div>
         </div>
         <div class="highlight-item">
-          <span class="hl-icon">💰</span>
+          <span class="hl-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+          </span>
           <div>
             <strong>Cost</strong>
             <p>100% free. Meals included.</p>
@@ -739,18 +794,18 @@
     <div class="speakers-grid">
       <div class="speaker-card">
         <div class="speaker-avatar"><div class="avatar-placeholder"></div></div>
-        <h3 class="speaker-name">TBA</h3>
-        <p class="speaker-org">Coming Soon</p>
+        <h3 class="speaker-name">To Be Determined</h3>
+        <p class="speaker-org">Announcement coming soon</p>
       </div>
       <div class="speaker-card">
         <div class="speaker-avatar"><div class="avatar-placeholder"></div></div>
-        <h3 class="speaker-name">TBA</h3>
-        <p class="speaker-org">Coming Soon</p>
+        <h3 class="speaker-name">To Be Determined</h3>
+        <p class="speaker-org">Announcement coming soon</p>
       </div>
       <div class="speaker-card">
         <div class="speaker-avatar"><div class="avatar-placeholder"></div></div>
-        <h3 class="speaker-name">TBA</h3>
-        <p class="speaker-org">Coming Soon</p>
+        <h3 class="speaker-name">To Be Determined</h3>
+        <p class="speaker-org">Announcement coming soon</p>
       </div>
     </div>
   </div>

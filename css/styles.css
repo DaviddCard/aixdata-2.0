@@ -236,6 +236,14 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 [data-theme="light"] .a-dot { color: rgba(40,100,20,0.45); }
 
+/* ── Light mode: neutralise dark section overlays ────────────────── */
+[data-theme="light"] #schedule,
+[data-theme="light"] #tracks,
+[data-theme="light"] #speakers,
+[data-theme="light"] #team {
+  background: linear-gradient(180deg, transparent, rgba(120,100,180,0.06) 50%, transparent);
+}
+
 
 /* ── Navbar ──────────────────────────────────────────────────────── */
 #navbar {

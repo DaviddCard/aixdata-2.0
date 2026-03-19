@@ -65,9 +65,11 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 ::selection { background: var(--green); color: #000; }
 
-::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--navy); border-radius: 4px; }
+
+[data-theme="light"] ::-webkit-scrollbar-thumb { background: rgba(110,80,180,0.35); }
 
 
 /* ── Background canvas ───────────────────────────────────────────── */

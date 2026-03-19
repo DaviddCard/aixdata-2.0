@@ -20,39 +20,7 @@
   <canvas id="loader-canvas"></canvas>
   <div class="loader-inner">
     <div class="loader-mascot">
-      <!-- Stingray outline — loader screen version, matches hero proportions -->
-      <svg class="mascot-svg" viewBox="-80 -50 640 490" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <filter id="lGlow">
-            <feGaussianBlur stdDeviation="3" result="b"/>
-            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-        </defs>
-        <!-- Disc body — same path as the hero mascot -->
-        <path d="M240,38 C320,22 448,72 448,152 C452,200 418,250 342,264
-                 C306,272 274,276 240,276 C206,276 174,272 138,264
-                 C62,250 28,200 32,152 C32,72 160,22 240,38 Z"
-          fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.65)" stroke-width="1.4"/>
-        <!-- Rostrum -->
-        <path d="M240,38 C236,28 232,20 230,14 C234,10 246,10 250,14 C248,20 244,28 240,38 Z"
-          fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.45)" stroke-width="1"/>
-        <!-- Eyes -->
-        <circle cx="206" cy="96" r="4" fill="white" filter="url(#lGlow)"/>
-        <circle cx="274" cy="96" r="4" fill="white" filter="url(#lGlow)"/>
-        <!-- Fin veins -->
-        <path d="M216,148 C182,157 140,148 92,136"  stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
-        <path d="M264,148 C298,157 340,148 388,136"  stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
-        <!-- Tail -->
-        <path d="M240,276 C236,310 228,348 218,378 C213,394 206,406 200,416"
-          stroke="rgba(255,255,255,0.58)" stroke-width="2.5" stroke-linecap="round"/>
-        <!-- Electric bolts — white outlines for loader -->
-        <polyline points="32,152 0,124 16,142 -20,130 -52,118"
-          stroke="rgba(255,255,255,0.72)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#lGlow)"/>
-        <polyline points="448,152 480,124 464,142 500,130 532,118"
-          stroke="rgba(255,255,255,0.72)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#lGlow)"/>
-        <polyline points="240,38 234,-8 238,14 228,-18"
-          stroke="rgba(255,255,255,0.72)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" filter="url(#lGlow)"/>
-      </svg>
+      <img class="mascot-svg loader-mascot-img" src="assets/stingray.png" alt="AIXDATA stingray mascot" draggable="false" />
     </div>
     <p class="loader-text">Loading...</p>
     <div class="loader-bar-wrap">

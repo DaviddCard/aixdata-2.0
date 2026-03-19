@@ -106,10 +106,11 @@ function initBgCanvas() {
   }
 
   function pickLightOrbColor(seed) {
-    if (seed < 0.35) return '130,80,210';
-    if (seed < 0.60) return '160,90,230';
-    if (seed < 0.80) return '90,55,170';
-    return '67,190,40';
+    if (seed < 0.28) return '120,50,220';   // deep violet
+    if (seed < 0.50) return '190,50,170';   // fuchsia/rose
+    if (seed < 0.68) return '50,110,235';   // sky blue
+    if (seed < 0.84) return '80,180,200';   // teal
+    return '150,60,230';                     // purple
   }
 
   // Neural-network nodes
@@ -157,16 +158,53 @@ function initBgCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     if (isLight) {
-      // Soft purple radial sweep
-      const lg = ctx.createRadialGradient(
-        canvas.width * 0.6, canvas.height * 0.28, 0,
-        canvas.width * 0.5, canvas.height * 0.5, canvas.width * 0.88
-      );
-      lg.addColorStop(0,    '#edeaf8');
-      lg.addColorStop(0.45, '#ece9f7');
-      lg.addColorStop(1,    '#e2dff0');
-      ctx.fillStyle = lg;
+      // Pure white base
+      ctx.fillStyle = '#ffffff';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Aurora bloom 1 — violet/purple, top-right
+      const a1 = ctx.createRadialGradient(
+        canvas.width * 0.82, canvas.height * 0.08, 0,
+        canvas.width * 0.82, canvas.height * 0.08, canvas.width * 0.55
+      );
+      a1.addColorStop(0,   'rgba(130,60,220,0.18)');
+      a1.addColorStop(0.5, 'rgba(130,60,220,0.07)');
+      a1.addColorStop(1,   'rgba(130,60,220,0)');
+      ctx.fillStyle = a1;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Aurora bloom 2 — rose/fuchsia, bottom-left
+      const a2 = ctx.createRadialGradient(
+        canvas.width * 0.1, canvas.height * 0.85, 0,
+        canvas.width * 0.1, canvas.height * 0.85, canvas.width * 0.5
+      );
+      a2.addColorStop(0,   'rgba(200,60,180,0.13)');
+      a2.addColorStop(0.5, 'rgba(200,60,180,0.05)');
+      a2.addColorStop(1,   'rgba(200,60,180,0)');
+      ctx.fillStyle = a2;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Aurora bloom 3 — sky-blue, top-left
+      const a3 = ctx.createRadialGradient(
+        canvas.width * 0.05, canvas.height * 0.15, 0,
+        canvas.width * 0.05, canvas.height * 0.15, canvas.width * 0.42
+      );
+      a3.addColorStop(0,   'rgba(60,120,240,0.11)');
+      a3.addColorStop(0.5, 'rgba(60,120,240,0.04)');
+      a3.addColorStop(1,   'rgba(60,120,240,0)');
+      ctx.fillStyle = a3;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Subtle dot grid
+      ctx.fillStyle = 'rgba(108,60,210,0.065)';
+      const lgsp = 36;
+      for (let gx = lgsp; gx < canvas.width; gx += lgsp) {
+        for (let gy = lgsp; gy < canvas.height; gy += lgsp) {
+          ctx.beginPath();
+          ctx.arc(gx, gy, 0.7, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
     } else {
       // Rich off-center dark gradient — teal core, deep navy-black edges
       const dg = ctx.createRadialGradient(
@@ -204,7 +242,7 @@ function initBgCanvas() {
 
     // Bokeh layer
     orbs.forEach(o => {
-      const a   = isLight ? o.alpha * 0.55 : o.alpha;
+      const a   = isLight ? o.alpha * 1.6 : o.alpha;
       const col = isLight ? pickLightOrbColor(o._seed) : o.color;
       const g   = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.r);
       g.addColorStop(0, `rgba(${col},${a})`);
@@ -221,7 +259,7 @@ function initBgCanvas() {
     });
 
     // Neural-network connection lines
-    const lineAlpha = isLight ? 0.055 : 0.13;
+    const lineAlpha = isLight ? 0.16 : 0.13;
     ctx.lineWidth = 0.65;
     for (let i = 0; i < nodes.length; i++) {
       for (let j = i + 1; j < nodes.length; j++) {
@@ -244,7 +282,7 @@ function initBgCanvas() {
 
     // Neural-network node dots
     nodes.forEach(n => {
-      const a = isLight ? n.alpha * 0.38 : n.alpha;
+      const a = isLight ? n.alpha * 0.65 : n.alpha;
       ctx.beginPath();
       ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
       ctx.fillStyle = `rgba(${isLight ? '110,70,190' : n.color},${a})`;

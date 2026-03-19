@@ -83,63 +83,73 @@ function initBgCanvas() {
   window.addEventListener('resize', resize);
 
   // Bokeh orbs — large glowing blobs that drift slowly
-  const orbs = Array.from({ length: 28 }, () => {
+  const orbs = Array.from({ length: 32 }, () => {
     const seed = Math.random();
     return {
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      r: 100 + Math.random() * 240,
-      dx: (Math.random() - 0.5) * 0.16,
-      dy: (Math.random() - 0.5) * 0.16,
+      r: 80 + Math.random() * 280,
+      dx: (Math.random() - 0.5) * 0.14,
+      dy: (Math.random() - 0.5) * 0.14,
       color: pickOrbColor(),
-      alpha: 0.028 + Math.random() * 0.058,
+      alpha: 0.032 + Math.random() * 0.065,
       _seed: seed
     };
   });
 
   function pickOrbColor() {
     const r = Math.random();
-    if (r < 0.38) return '67,190,40';   // green
-    if (r < 0.60) return '255,181,32';  // gold
-    if (r < 0.80) return '23,60,99';    // navy
-    return '0,229,255';                  // electric cyan
+    if (r < 0.35) return '67,190,40';
+    if (r < 0.56) return '255,181,32';
+    if (r < 0.76) return '0,180,220';
+    return '80,40,180';
   }
 
   function pickLightOrbColor(seed) {
-    if (seed < 0.35) return '148,80,220';  // violet
-    if (seed < 0.60) return '180,100,240'; // soft purple
-    if (seed < 0.78) return '100,60,180';  // deep indigo
-    return '67,190,40';                    // green accent
+    if (seed < 0.35) return '130,80,210';
+    if (seed < 0.60) return '160,90,230';
+    if (seed < 0.80) return '90,55,170';
+    return '67,190,40';
   }
 
   // Neural-network nodes
-  const nodes = Array.from({ length: 62 }, () => ({
+  const nodes = Array.from({ length: 70 }, () => ({
     x: Math.random() * canvas.width,
     y: Math.random() * canvas.height,
-    r: 1.4 + Math.random() * 2.2,
-    dx: (Math.random() - 0.5) * 0.28,
-    dy: (Math.random() - 0.5) * 0.28,
-    alpha: 0.2 + Math.random() * 0.38,
+    r: 1.2 + Math.random() * 2.4,
+    dx: (Math.random() - 0.5) * 0.26,
+    dy: (Math.random() - 0.5) * 0.26,
+    alpha: 0.22 + Math.random() * 0.42,
     color: (() => {
       const c = Math.random();
-      if (c < 0.5)  return '67,190,40';
-      if (c < 0.78) return '255,181,32';
+      if (c < 0.48) return '67,190,40';
+      if (c < 0.74) return '255,181,32';
       return '0,229,255';
     })()
   }));
 
   // Electric spark particles — blink like discharge points
-  const sparks = Array.from({ length: 20 }, () => ({
+  const sparks = Array.from({ length: 24 }, () => ({
     x: Math.random() * canvas.width,
     y: Math.random() * canvas.height,
-    r: 0.9 + Math.random() * 1.4,
+    r: 0.8 + Math.random() * 1.5,
     phase: Math.random() * Math.PI * 2,
-    speed: 0.06 + Math.random() * 0.1,
-    dx: (Math.random() - 0.5) * 0.45,
-    dy: (Math.random() - 0.5) * 0.45
+    speed: 0.05 + Math.random() * 0.09,
+    dx: (Math.random() - 0.5) * 0.4,
+    dy: (Math.random() - 0.5) * 0.4
   }));
 
-  const LINK_DIST = 145;
+  // Data stream columns — matrix-style falling dot chains
+  const streams = Array.from({ length: 22 }, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    speed: 0.35 + Math.random() * 0.65,
+    len: 4 + Math.floor(Math.random() * 7),
+    alpha: 0.05 + Math.random() * 0.09,
+    gap: 13 + Math.random() * 9
+  }));
+
+  const LINK_DIST = 150;
 
   function drawBg() {
     const isLight = document.documentElement.dataset.theme === 'light';
@@ -147,29 +157,56 @@ function initBgCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     if (isLight) {
-      const lg = ctx.createLinearGradient(0, 0, canvas.width * 0.5, canvas.height);
-      lg.addColorStop(0, '#eceaf8');
-      lg.addColorStop(1, '#e2dff3');
+      // Soft purple radial sweep
+      const lg = ctx.createRadialGradient(
+        canvas.width * 0.6, canvas.height * 0.28, 0,
+        canvas.width * 0.5, canvas.height * 0.5, canvas.width * 0.88
+      );
+      lg.addColorStop(0,    '#edeaf8');
+      lg.addColorStop(0.45, '#ece9f7');
+      lg.addColorStop(1,    '#e2dff0');
       ctx.fillStyle = lg;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
     } else {
-      // Deep-ocean radial gradient — slightly lighter in the center
+      // Rich off-center dark gradient — teal core, deep navy-black edges
       const dg = ctx.createRadialGradient(
-        canvas.width * 0.5, canvas.height * 0.42, 0,
-        canvas.width * 0.5, canvas.height * 0.5,  canvas.width * 0.82
+        canvas.width * 0.38, canvas.height * 0.38, 0,
+        canvas.width * 0.52, canvas.height * 0.5,  canvas.width * 0.9
       );
-      dg.addColorStop(0,   '#0d1814');
-      dg.addColorStop(0.38,'#080e0b');
-      dg.addColorStop(1,   '#030808');
+      dg.addColorStop(0,    '#0f2018');
+      dg.addColorStop(0.22, '#0a1410');
+      dg.addColorStop(0.55, '#06090f');
+      dg.addColorStop(1,    '#020407');
       ctx.fillStyle = dg;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Subtle secondary accent — faint indigo bloom top-right
+      const ig = ctx.createRadialGradient(
+        canvas.width * 0.85, canvas.height * 0.12, 0,
+        canvas.width * 0.85, canvas.height * 0.12, canvas.width * 0.4
+      );
+      ig.addColorStop(0, 'rgba(40,20,90,0.18)');
+      ig.addColorStop(1, 'rgba(40,20,90,0)');
+      ctx.fillStyle = ig;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Faint dot-grid (circuit texture)
+      ctx.fillStyle = 'rgba(67,190,40,0.055)';
+      const gsp = 38;
+      for (let gx = gsp; gx < canvas.width; gx += gsp) {
+        for (let gy = gsp; gy < canvas.height; gy += gsp) {
+          ctx.beginPath();
+          ctx.arc(gx, gy, 0.7, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
     }
 
     // Bokeh layer
     orbs.forEach(o => {
-      const a = isLight ? o.alpha * 0.5 : o.alpha;
-      const col = o.color;
-      const g = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.r);
+      const a   = isLight ? o.alpha * 0.55 : o.alpha;
+      const col = isLight ? pickLightOrbColor(o._seed) : o.color;
+      const g   = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.r);
       g.addColorStop(0, `rgba(${col},${a})`);
       g.addColorStop(1, `rgba(${col},0)`);
       ctx.beginPath();
@@ -184,20 +221,22 @@ function initBgCanvas() {
     });
 
     // Neural-network connection lines
-    const lineAlpha = isLight ? 0.05 : 0.11;
-    ctx.lineWidth = 0.6;
+    const lineAlpha = isLight ? 0.055 : 0.13;
+    ctx.lineWidth = 0.65;
     for (let i = 0; i < nodes.length; i++) {
       for (let j = i + 1; j < nodes.length; j++) {
         const ddx  = nodes[i].x - nodes[j].x;
         const ddy  = nodes[i].y - nodes[j].y;
         const dist = Math.sqrt(ddx * ddx + ddy * ddy);
         if (dist < LINK_DIST) {
+          const fade = lineAlpha * (1 - dist / LINK_DIST);
           ctx.beginPath();
           ctx.moveTo(nodes[i].x, nodes[i].y);
           ctx.lineTo(nodes[j].x, nodes[j].y);
-          // alternate green and cyan connections
-          const lc = (i + j) % 3 === 0 ? '0,229,255' : '67,190,40';
-          ctx.strokeStyle = `rgba(${lc},${lineAlpha * (1 - dist / LINK_DIST)})`;
+          const lc = isLight
+            ? '110,70,190'
+            : (i + j) % 3 === 0 ? '0,229,255' : '67,190,40';
+          ctx.strokeStyle = `rgba(${lc},${fade})`;
           ctx.stroke();
         }
       }
@@ -205,10 +244,10 @@ function initBgCanvas() {
 
     // Neural-network node dots
     nodes.forEach(n => {
-      const a = isLight ? n.alpha * 0.42 : n.alpha;
+      const a = isLight ? n.alpha * 0.38 : n.alpha;
       ctx.beginPath();
       ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${n.color},${a})`;
+      ctx.fillStyle = `rgba(${isLight ? '110,70,190' : n.color},${a})`;
       ctx.fill();
       n.x += n.dx; n.y += n.dy;
       if (n.x < 0) n.x = canvas.width;
@@ -217,17 +256,30 @@ function initBgCanvas() {
       if (n.y > canvas.height) n.y = 0;
     });
 
-    // Electric spark particles — only in dark mode
+    // Dark mode only effects
     if (!isLight) {
+      // Data streams — faint falling dot chains
+      streams.forEach(s => {
+        for (let k = 0; k < s.len; k++) {
+          const ya   = s.y - k * s.gap;
+          const fade = (1 - k / s.len) * s.alpha;
+          ctx.beginPath();
+          ctx.arc(s.x, ya, 0.9, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(67,190,40,${fade})`;
+          ctx.fill();
+        }
+        s.y += s.speed;
+        if (s.y > canvas.height + s.len * s.gap) s.y = -s.gap;
+      });
+
+      // Electric spark particles
       sparks.forEach(s => {
         s.phase += s.speed;
         const brightness = Math.max(0, Math.sin(s.phase)) * 0.85 + 0.12;
-        // inner dot
         ctx.beginPath();
         ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(0,229,255,${brightness * 0.8})`;
         ctx.fill();
-        // outer soft glow
         const sg = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r * 5);
         sg.addColorStop(0, `rgba(0,229,255,${brightness * 0.18})`);
         sg.addColorStop(1, 'rgba(0,229,255,0)');
@@ -241,6 +293,16 @@ function initBgCanvas() {
         if (s.y < 0) s.y = canvas.height;
         if (s.y > canvas.height) s.y = 0;
       });
+
+      // Edge vignette
+      const vg = ctx.createRadialGradient(
+        canvas.width * 0.5, canvas.height * 0.5, canvas.width * 0.28,
+        canvas.width * 0.5, canvas.height * 0.5, canvas.width * 0.88
+      );
+      vg.addColorStop(0, 'rgba(0,0,0,0)');
+      vg.addColorStop(1, 'rgba(0,0,0,0.52)');
+      ctx.fillStyle = vg;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
     }
 
     requestAnimationFrame(drawBg);

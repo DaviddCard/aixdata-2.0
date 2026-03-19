@@ -147,14 +147,9 @@ function initBgCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     if (isLight) {
-      const lg = ctx.createRadialGradient(
-        canvas.width * 0.65, canvas.height * 0.3, 0,
-        canvas.width * 0.5,  canvas.height * 0.5, canvas.width * 0.85
-      );
-      lg.addColorStop(0,    '#ede8f8');
-      lg.addColorStop(0.35, '#f0ecfa');
-      lg.addColorStop(0.7,  '#ece7f5');
-      lg.addColorStop(1,    '#e4dff0');
+      const lg = ctx.createLinearGradient(0, 0, canvas.width * 0.5, canvas.height);
+      lg.addColorStop(0, '#f1f0f5');
+      lg.addColorStop(1, '#e8e6ef');
       ctx.fillStyle = lg;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
     } else {
@@ -172,8 +167,8 @@ function initBgCanvas() {
 
     // Bokeh layer
     orbs.forEach(o => {
-      const a = isLight ? o.alpha * 0.7 : o.alpha;
-      const col = isLight ? pickLightOrbColor(o._seed) : o.color;
+      const a = isLight ? o.alpha * 0.5 : o.alpha;
+      const col = o.color;
       const g = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.r);
       g.addColorStop(0, `rgba(${col},${a})`);
       g.addColorStop(1, `rgba(${col},0)`);

@@ -36,15 +36,15 @@
 
 /* ── Light mode variable overrides ──────────────────────────────── */
 [data-theme="light"] {
-  --bg:       #f3f0f8;
-  --bg2:      #ece7f5;
-  --text:     #1a1428;
-  --text-dim: rgba(30,18,50,0.52);
-  --border:   rgba(130,80,200,0.22);
-  --card-bg:  rgba(255,255,255,0.82);
-  --input-bg: rgba(255,255,255,0.92);
-  --faq-bg:   rgba(240,234,252,0.85);
-  --nav-blur: rgba(243,240,248,0.93);
+  --bg:       #f1f0f5;
+  --bg2:      #e8e6ef;
+  --text:     #182318;
+  --text-dim: rgba(18,40,18,0.52);
+  --border:   rgba(67,190,40,0.28);
+  --card-bg:  rgba(255,255,255,0.78);
+  --input-bg: rgba(255,255,255,0.9);
+  --faq-bg:   rgba(228,240,230,0.8);
+  --nav-blur: rgba(240,245,241,0.93);
 }
 
 html { scroll-behavior: smooth; }

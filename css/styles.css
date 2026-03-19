@@ -36,8 +36,8 @@
 
 /* ── Light mode variable overrides ──────────────────────────────── */
 [data-theme="light"] {
-  --bg:       #f1f0f5;
-  --bg2:      #e8e6ef;
+  --bg:       #eceaf8;
+  --bg2:      #e2dff3;
   --text:     #182318;
   --text-dim: rgba(18,40,18,0.52);
   --border:   rgba(67,190,40,0.28);

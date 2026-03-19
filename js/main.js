@@ -148,8 +148,8 @@ function initBgCanvas() {
 
     if (isLight) {
       const lg = ctx.createLinearGradient(0, 0, canvas.width * 0.5, canvas.height);
-      lg.addColorStop(0, '#f1f0f5');
-      lg.addColorStop(1, '#e8e6ef');
+      lg.addColorStop(0, '#eceaf8');
+      lg.addColorStop(1, '#e2dff3');
       ctx.fillStyle = lg;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
     } else {

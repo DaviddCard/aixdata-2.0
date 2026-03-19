@@ -83,15 +83,19 @@ function initBgCanvas() {
   window.addEventListener('resize', resize);
 
   // Bokeh orbs — large glowing blobs that drift slowly
-  const orbs = Array.from({ length: 28 }, () => ({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    r: 100 + Math.random() * 240,
-    dx: (Math.random() - 0.5) * 0.16,
-    dy: (Math.random() - 0.5) * 0.16,
-    color: pickOrbColor(),
-    alpha: 0.028 + Math.random() * 0.058
-  }));
+  const orbs = Array.from({ length: 28 }, () => {
+    const seed = Math.random();
+    return {
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: 100 + Math.random() * 240,
+      dx: (Math.random() - 0.5) * 0.16,
+      dy: (Math.random() - 0.5) * 0.16,
+      color: pickOrbColor(),
+      alpha: 0.028 + Math.random() * 0.058,
+      _seed: seed
+    };
+  });
 
   function pickOrbColor() {
     const r = Math.random();
@@ -99,6 +103,13 @@ function initBgCanvas() {
     if (r < 0.60) return '255,181,32';  // gold
     if (r < 0.80) return '23,60,99';    // navy
     return '0,229,255';                  // electric cyan
+  }
+
+  function pickLightOrbColor(seed) {
+    if (seed < 0.35) return '148,80,220';  // violet
+    if (seed < 0.60) return '180,100,240'; // soft purple
+    if (seed < 0.78) return '100,60,180';  // deep indigo
+    return '67,190,40';                    // green accent
   }
 
   // Neural-network nodes
@@ -136,9 +147,14 @@ function initBgCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     if (isLight) {
-      const lg = ctx.createLinearGradient(0, 0, canvas.width * 0.5, canvas.height);
-      lg.addColorStop(0, '#f0f5f1');
-      lg.addColorStop(1, '#e6ede7');
+      const lg = ctx.createRadialGradient(
+        canvas.width * 0.65, canvas.height * 0.3, 0,
+        canvas.width * 0.5,  canvas.height * 0.5, canvas.width * 0.85
+      );
+      lg.addColorStop(0,    '#ede8f8');
+      lg.addColorStop(0.35, '#f0ecfa');
+      lg.addColorStop(0.7,  '#ece7f5');
+      lg.addColorStop(1,    '#e4dff0');
       ctx.fillStyle = lg;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
     } else {
@@ -156,10 +172,11 @@ function initBgCanvas() {
 
     // Bokeh layer
     orbs.forEach(o => {
-      const a = isLight ? o.alpha * 0.5 : o.alpha;
+      const a = isLight ? o.alpha * 0.7 : o.alpha;
+      const col = isLight ? pickLightOrbColor(o._seed) : o.color;
       const g = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.r);
-      g.addColorStop(0, `rgba(${o.color},${a})`);
-      g.addColorStop(1, `rgba(${o.color},0)`);
+      g.addColorStop(0, `rgba(${col},${a})`);
+      g.addColorStop(1, `rgba(${col},0)`);
       ctx.beginPath();
       ctx.arc(o.x, o.y, o.r, 0, Math.PI * 2);
       ctx.fillStyle = g;

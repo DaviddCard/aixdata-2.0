@@ -694,8 +694,15 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .spark-b { animation: sparkRing 2.1s ease-out infinite; animation-delay: 0.7s; }
 .spark-c { animation: sparkRing 1.7s ease-out infinite; animation-delay: 0.3s; }
 
+/* Theme mascot swap — navy in dark, purple in light */
+.theme-light-img { display: none; }
+.theme-dark-img  { display: block; }
+
+[data-theme="light"] .theme-dark-img  { display: none; }
+[data-theme="light"] .theme-light-img { display: block; }
+
 [data-theme="light"] .mascot-main {
-  filter: drop-shadow(0 0 14px rgba(0,140,180,0.3));
+  filter: drop-shadow(0 0 14px rgba(120,60,180,0.3));
 }
 
 

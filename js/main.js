@@ -570,13 +570,12 @@ if (form) {
     };
 
     try {
-      const res = await fetch(SHEET_ENDPOINT, {
+      const params = new URLSearchParams(data);
+      await fetch(SHEET_ENDPOINT, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        mode: 'no-cors',
+        body: params
       });
-
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
       const wrapper = document.getElementById('signup');
       wrapper.innerHTML = `

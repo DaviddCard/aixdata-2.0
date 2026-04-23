@@ -5,8 +5,13 @@
 
 function doPost(e) {
   try {
-    var data   = JSON.parse(e.postData.contents);
-    var sheet  = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var fname = e.parameter.fname || '';
+    var lname = e.parameter.lname || '';
+    var email = e.parameter.email || '';
+    var major = e.parameter.major || '';
+    var exp   = e.parameter.exp   || '';
+    var team  = e.parameter.team  || '';
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
 
     // Add header row on first submission
     if (sheet.getLastRow() === 0) {
@@ -16,15 +21,7 @@ function doPost(e) {
       ]);
     }
 
-    sheet.appendRow([
-      new Date().toISOString(),
-      data.fname || '',
-      data.lname || '',
-      data.email || '',
-      data.major || '',
-      data.exp   || '',
-      data.team  || ''
-    ]);
+    sheet.appendRow([new Date().toISOString(), fname, lname, email, major, exp, team]);
 
     return ContentService
       .createTextOutput(JSON.stringify({ success: true }))

@@ -569,33 +569,20 @@ if (form) {
       team:  form.team.value.trim()
     };
 
-    try {
-      const url = SHEET_ENDPOINT + '?' + new URLSearchParams(data).toString();
-      await fetch(url, { mode: 'no-cors' });
+    const url = SHEET_ENDPOINT + '?' + new URLSearchParams(data).toString();
+    try { await fetch(url); } catch(_) {}
 
-      const wrapper = document.getElementById('signup');
-      wrapper.innerHTML = `
-        <div class="form-success">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-            <polyline points="22 4 12 14.01 9 11.01"/>
-          </svg>
-          <h3>You're registered!</h3>
-          <p>Thanks, ${data.fname}! We'll send updates to <strong>${data.email}</strong>.<br>
-             See you on May 22, 2026 ⚡</p>
-        </div>`;
-    } catch (err) {
-      btn.textContent = originalText;
-      btn.disabled = false;
-
-      let msg = form.querySelector('.form-error');
-      if (!msg) {
-        msg = document.createElement('p');
-        msg.className = 'form-error';
-        form.appendChild(msg);
-      }
-      msg.textContent = 'Something went wrong — please try again or email datathon@csulbai.org.';
-    }
+    const wrapper = document.getElementById('signup');
+    wrapper.innerHTML = `
+      <div class="form-success">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+          <polyline points="22 4 12 14.01 9 11.01"/>
+        </svg>
+        <h3>You're registered!</h3>
+        <p>Thanks, ${data.fname}! We'll send updates to <strong>${data.email}</strong>.<br>
+           See you on May 22, 2026 ⚡</p>
+      </div>`;
   });
 }

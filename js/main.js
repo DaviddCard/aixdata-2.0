@@ -2,7 +2,7 @@
 // Loader, animated background, flip clock, theme toggle,
 // FAQ accordion, scroll reveal, stats counter, scroll-to-top
 
-const SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycby7hGQaBaYqeM_Lrh7UDBMixtO5TzuHTvEcotNcHVm9Vz6ar3orgb7Ql1o4g6hhZvrGUg/exec';
+const SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyh-sGlLnFzBeP39BwqN9kX0wfAZjZyVhIVO7JnOM2NEedaxmufG977MVYqhU2ulS8vYw/exec';
 
 const EVENT_DATE = new Date('May 22, 2026 08:00:00').getTime();
 

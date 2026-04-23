@@ -2,7 +2,7 @@
 // Loader, animated background, flip clock, theme toggle,
 // FAQ accordion, scroll reveal, stats counter, scroll-to-top
 
-const SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyUIIc7KKq4ZDJofzGKARcudRUfgxVn0LMnVstkSqQrcRDWsLjBSQv-3BHlfMGRa5ehig/exec';
+const SHEET_ENDPOINT = 'https://script.google.com/macros/s/AKfycby7hGQaBaYqeM_Lrh7UDBMixtO5TzuHTvEcotNcHVm9Vz6ar3orgb7Ql1o4g6hhZvrGUg/exec';
 
 const EVENT_DATE = new Date('May 22, 2026 08:00:00').getTime();
 
@@ -570,12 +570,8 @@ if (form) {
     };
 
     try {
-      const params = new URLSearchParams(data);
-      await fetch(SHEET_ENDPOINT, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: params
-      });
+      const url = SHEET_ENDPOINT + '?' + new URLSearchParams(data).toString();
+      await fetch(url, { mode: 'no-cors' });
 
       const wrapper = document.getElementById('signup');
       wrapper.innerHTML = `

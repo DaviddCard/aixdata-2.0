@@ -34,9 +34,26 @@ function doPost(e) {
   }
 }
 
-// Allows preflight CORS requests from the browser
-function doGet() {
-  return ContentService
-    .createTextOutput(JSON.stringify({ status: 'ok' }))
-    .setMimeType(ContentService.MimeType.JSON);
+function doGet(e) {
+  try {
+    if (e && e.parameter && e.parameter.fname) {
+      var sheet = SpreadsheetApp.openById('1zG47BIdWjWQM35p-RWcRCgYQ921-a9C16wY4xtuZreQ').getActiveSheet();
+      if (sheet.getLastRow() === 0) {
+        sheet.appendRow(['Timestamp','First Name','Last Name','CSULB Email','Major','Experience Level','Team Name']);
+      }
+      sheet.appendRow([
+        new Date().toISOString(),
+        e.parameter.fname || '',
+        e.parameter.lname || '',
+        e.parameter.email || '',
+        e.parameter.major || '',
+        e.parameter.exp   || '',
+        e.parameter.team  || ''
+      ]);
+      return ContentService.createTextOutput(JSON.stringify({success:true})).setMimeType(ContentService.MimeType.JSON);
+    }
+    return ContentService.createTextOutput(JSON.stringify({status:'ok'})).setMimeType(ContentService.MimeType.JSON);
+  } catch(err) {
+    return ContentService.createTextOutput(JSON.stringify({success:false,error:err.message})).setMimeType(ContentService.MimeType.JSON);
+  }
 }

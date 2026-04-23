@@ -587,6 +587,38 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 .btn-primary.form-submit { margin-top: 1.25rem; }
 
+.form-success {
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 3rem 2rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  text-align: center;
+}
+.form-success svg {
+  width: 52px;
+  height: 52px;
+  stroke: #43BE28;
+}
+.form-success h3 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.4rem;
+  color: #43BE28;
+}
+.form-success p { color: var(--text-muted); line-height: 1.65; }
+
+.form-error {
+  margin-top: 0.75rem;
+  color: #ff6b6b;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
 /* Ghost / secondary button */
 .btn-ghost {
   display: inline-block;

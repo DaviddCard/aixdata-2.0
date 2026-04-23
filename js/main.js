@@ -2,7 +2,9 @@
 // Loader, animated background, flip clock, theme toggle,
 // FAQ accordion, scroll reveal, stats counter, scroll-to-top
 
-const EVENT_DATE = new Date('April 18, 2026 09:00:00').getTime();
+const SHEET_ENDPOINT = 'YOUR_APPS_SCRIPT_URL_HERE';
+
+const EVENT_DATE = new Date('May 22, 2026 08:00:00').getTime();
 
 
 // ── Loader ────────────────────────────────────────────────────────
@@ -546,15 +548,59 @@ if (mascotImg) {
 }
 
 
-// ── Registration form (stub) ──────────────────────────────────────
+// ── Registration form → Google Sheets via Apps Script ────────────
 const form = document.getElementById('signup-form');
 if (form) {
-  form.addEventListener('submit', e => {
+  form.addEventListener('submit', async e => {
     e.preventDefault();
+
     const btn = form.querySelector('button[type="submit"]');
-    btn.textContent = 'Submitted ✓';
-    btn.style.background = 'linear-gradient(180deg, #3da820 0%, #1d6010 100%)';
+    const originalText = btn.textContent;
+
+    btn.textContent = 'Submitting…';
     btn.disabled = true;
-    // TODO: wire to backend / Google Forms endpoint
+
+    const data = {
+      fname: form.fname.value.trim(),
+      lname: form.lname.value.trim(),
+      email: form.email.value.trim(),
+      major: form.major.value.trim(),
+      exp:   form.exp.value,
+      team:  form.team.value.trim()
+    };
+
+    try {
+      const res = await fetch(SHEET_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+      const wrapper = document.getElementById('signup');
+      wrapper.innerHTML = `
+        <div class="form-success">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+          <h3>You're registered!</h3>
+          <p>Thanks, ${data.fname}! We'll send updates to <strong>${data.email}</strong>.<br>
+             See you on May 22, 2026 ⚡</p>
+        </div>`;
+    } catch (err) {
+      btn.textContent = originalText;
+      btn.disabled = false;
+
+      let msg = form.querySelector('.form-error');
+      if (!msg) {
+        msg = document.createElement('p');
+        msg.className = 'form-error';
+        form.appendChild(msg);
+      }
+      msg.textContent = 'Something went wrong — please try again or email datathon@csulbai.org.';
+    }
   });
 }

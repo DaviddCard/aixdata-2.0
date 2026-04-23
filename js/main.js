@@ -569,8 +569,12 @@ if (form) {
       team:  form.team.value.trim()
     };
 
-    const url = SHEET_ENDPOINT + '?' + new URLSearchParams(data).toString();
-    try { await fetch(url); } catch(_) {}
+    await new Promise((resolve) => {
+      const img = new Image();
+      img.onload = img.onerror = resolve;
+      img.src = SHEET_ENDPOINT + '?' + new URLSearchParams(data).toString();
+      setTimeout(resolve, 3000);
+    });
 
     const wrapper = document.getElementById('signup');
     wrapper.innerHTML = `

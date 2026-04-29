@@ -1037,7 +1037,8 @@ section { position: relative; z-index: 1; }
 }
 
 .form-field input,
-.form-field select {
+.form-field select,
+.form-field textarea {
   background: var(--input-bg);
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -1050,10 +1051,17 @@ section { position: relative; z-index: 1; }
   width: 100%;
 }
 
-.form-field input::placeholder { color: var(--text-dim); opacity: 0.5; }
+.form-field textarea {
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.form-field input::placeholder,
+.form-field textarea::placeholder { color: var(--text-dim); opacity: 0.5; }
 
 .form-field input:focus,
-.form-field select:focus {
+.form-field select:focus,
+.form-field textarea:focus {
   outline: none;
   border-color: var(--green);
   box-shadow: 0 0 0 3px rgba(67,190,40,0.12);

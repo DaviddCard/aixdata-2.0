@@ -561,12 +561,17 @@ if (form) {
     btn.disabled = true;
 
     const data = {
-      fname: form.fname.value.trim(),
-      lname: form.lname.value.trim(),
-      email: form.email.value.trim(),
-      major: form.major.value.trim(),
-      exp:   form.exp.value,
-      team:  form.team.value.trim()
+      fname:    form.fname.value.trim(),
+      lname:    form.lname.value.trim(),
+      email:    form.email.value.trim(),
+      major:    form.major.value.trim(),
+      exp:      form.exp.value,
+      team:     form.team.value.trim(),
+      dietary:  form.dietary.value.trim(),
+      why:      form.why.value.trim(),
+      github:   form.github.value.trim(),
+      linkedin: form.linkedin.value.trim(),
+      resume:   form.resume.value.trim()
     };
 
     await new Promise((resolve) => {
